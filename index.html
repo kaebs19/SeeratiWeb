@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="سيرتي - أفضل تطبيق لإنشاء السيرة الذاتية الاحترافية. أنشئ سيرتك في دقائق.">
+    <meta name="keywords" content="سيرة ذاتية, CV, Resume, وظيفة, توظيف, سيرتي, Seerati">
+    <meta name="author" content="Seerati">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="سيرتي - منشئ السيرة الذاتية">
+    <meta property="og:description" content="أنشئ سيرة ذاتية احترافية في دقائق">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kaebs19.github.io/SeeratiWeb/">
+    
+    <title>سيرتي - منشئ السيرة الذاتية | Seerati - CV Builder</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4ADE80;
+            --primary-dark: #22C55E;
+            --background: #0D1F17;
+            --surface: #1A3D2E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #9CA3AF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        body.en {
+            direction: ltr;
+            font-family: 'Inter', 'Cairo', sans-serif;
+        }
+        
+        /* Language Switcher */
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        body.en .lang-switch {
+            left: auto;
+            right: 20px;
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn.active, .lang-btn:hover {
+            background: var(--primary);
+            color: var(--background);
+        }
+        
+        /* Header */
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
+            position: relative;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(74, 222, 128, 0.3);
+        }
+        
+        .logo i {
+            font-size: 50px;
+            color: var(--background);
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), #86EFAC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tagline {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--primary);
+            color: var(--background);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.4);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(74, 222, 128, 0.5);
+        }
+        
+        .download-btn i {
+            font-size: 24px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 20px;
+            background: var(--surface);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 60px;
+            color: var(--primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--background);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(74, 222, 128, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 32px;
+            color: var(--background);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        /* Screenshots Section */
+        .screenshots {
+            padding: 100px 20px;
+            background: var(--background);
+            text-align: center;
+        }
+        
+        .screenshots-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        
+        .screenshot {
+            width: 250px;
+            height: 500px;
+            background: var(--surface);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .screenshot:hover {
+            transform: scale(1.05);
+        }
+        
+        .screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .screenshot-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--surface), var(--background));
+        }
+        
+        .screenshot-placeholder i {
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .screenshot-placeholder span {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 20px;
+            background: var(--surface);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: var(--background);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured::before {
+            content: attr(data-badge);
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: var(--background);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: right;
+        }
+        
+        body.en .pricing-features {
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pricing-features li i {
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            background: var(--background);
+            text-align: center;
+            border-top: 1px solid var(--surface);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background: var(--surface);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--background);
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .screenshot {
+                width: 200px;
+                height: 400px;
+            }
+        }
+        
+        /* Hide elements based on language */
+        .ar-only { display: block; }
+        .en-only { display: none; }
+        
+        body.en .ar-only { display: none; }
+        body.en .en-only { display: block; }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLanguage('ar')">العربية</button>
+        <button class="lang-btn" onclick="setLanguage('en')">English</button>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-file-alt"></i>
+        </div>
+        
+        <!-- Arabic Content -->
+        <div class="ar-only">
+            <h1>سيرتي</h1>
+            <p class="tagline">أنشئ سيرة ذاتية احترافية في دقائق معدودة. قوالب جاهزة، تصدير PDF، ودعم كامل للعربية والإنجليزية.</p>
+        </div>
+        
+        <!-- English Content -->
+        <div class="en-only">
+            <h1>Seerati</h1>
+            <p class="tagline">Create a professional CV in minutes. Ready-made templates, PDF export, and full Arabic & English support.</p>
+        </div>
+        
+        <a href="https://apps.apple.com/app/id6756464872" class="download-btn">
+            <i class="fab fa-apple"></i>
+            <span class="ar-only">تحميل من App Store</span>
+            <span class="en-only">Download on App Store</span>
+        </a>
+    </header>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="ar-only">المميزات</span>
+                <span class="en-only">Features</span>
+            </h2>
+            
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>
+                        <span class="ar-only">قوالب احترافية</span>
+                        <span class="en-only">Professional Templates</span>
+                    </h3>
+                    <p>
+                        <span class="ar-only">مجموعة متنوعة من القوالب المصممة بعناية لتناسب جميع المجالات والتخصصات.</span>
+                        <span class="en-only">A variety of carefully designed templates to suit all fields and specializations.</span>
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>
+                        <span class="ar-only">دعم ثنائي اللغة</span>
+                        <span class="en-only">Bilingual Support</span>
+                    </h3>
+                    <p>
+                        <span class="ar-only">دعم كامل للعربية والإنجليزية مع تنسيق صحيح من اليمين لليسار.</span>
+                        <span class="en-only">Full Arabic and English support with proper RTL formatting.</span>
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>
+                        <span class="ar-only">تصدير PDF</span>
+                        <span class="en-only">PDF Export</span>
+                    </h3>
+                    <p>
+                        <span class="ar-only">صدّر سيرتك الذاتية بصيغة PDF عالية الجودة جاهزة للإرسال.</span>
+                        <span class="en-only">Export your CV as a high-quality PDF ready to send.</span>
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>
+                        <span class="ar-only">سهولة الاستخدام</span>
+                        <span class="en-only">Easy to Use</span>
+                    </h3>
+                    <p>
+                        <span class="ar-only">واجهة بسيطة وسهلة تجعل إنشاء سيرتك الذاتية أمراً ممتعاً.</span>
+                        <span class="en-only">Simple interface makes creating your CV enjoyable.</span>
+                    </p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <h3>
+                        <span class="ar-only">حفظ متعدد</span>
+                        <span class="en-only">Multiple Saves</span>
+                    </h3>
+                    <p>
+                        <span class="ar-only">احفظ عدة سير ذاتية وعدّلها في أي وقت حسب الوظيفة.</span>
+                        <span class="en-only">Save multiple CVs and edit them anytime for different jobs.</span>
+                    </p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>
+                        <span class="ar-only">خصوصية تامة</span>
+                        <span class="en-only">Complete Privacy</span>
+                    </h3>
+                    <p>
+                        <span class="ar-only">بياناتك تبقى على جهازك. نحترم خصوصيتك ولا نشارك معلوماتك.</span>
+                        <span class="en-only">Your data stays on your device. We respect your privacy.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Screenshots Section -->
+    <section class="screenshots">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="ar-only">صور من التطبيق</span>
+                <span class="en-only">App Screenshots</span>
+            </h2>
+            
+            <div class="screenshots-container">
+                <div class="screenshot">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-home"></i>
+                        <span class="ar-only">الشاشة الرئيسية</span>
+                        <span class="en-only">Home Screen</span>
+                    </div>
+                </div>
+                <div class="screenshot">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-th-large"></i>
+                        <span class="ar-only">القوالب</span>
+                        <span class="en-only">Templates</span>
+                    </div>
+                </div>
+                <div class="screenshot">
+                    <div class="screenshot-placeholder">
+                        <i class="fas fa-edit"></i>
+                        <span class="ar-only">التحرير</span>
+                        <span class="en-only">Editor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="ar-only">الأسعار</span>
+                <span class="en-only">Pricing</span>
+            </h2>
+            
+            <div class="pricing-grid">
+                <!-- Free Plan -->
+                <div class="pricing-card">
+                    <h3>
+                        <span class="ar-only">مجاني</span>
+                        <span class="en-only">Free</span>
+                    </h3>
+                    <div class="price">
+                        <span class="ar-only">0 ر.س</span>
+                        <span class="en-only">$0</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">قالب مجاني واحد</span>
+                            <span class="en-only">One free template</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">3 تصديرات PDF</span>
+                            <span class="en-only">3 PDF exports</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">جميع الأقسام</span>
+                            <span class="en-only">All sections</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Premium Monthly -->
+                <div class="pricing-card featured" data-badge="الأكثر شعبية">
+                    <h3>
+                        <span class="ar-only">شهري</span>
+                        <span class="en-only">Monthly</span>
+                    </h3>
+                    <div class="price">
+                        <span class="ar-only">9.99 ر.س<span>/شهر</span></span>
+                        <span class="en-only">$2.99<span>/month</span></span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">جميع القوالب المميزة</span>
+                            <span class="en-only">All premium templates</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">تصدير PDF غير محدود</span>
+                            <span class="en-only">Unlimited PDF exports</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">بدون إعلانات</span>
+                            <span class="en-only">No ads</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">دعم فني أولوية</span>
+                            <span class="en-only">Priority support</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Lifetime -->
+                <div class="pricing-card">
+                    <h3>
+                        <span class="ar-only">مدى الحياة</span>
+                        <span class="en-only">Lifetime</span>
+                    </h3>
+                    <div class="price">
+                        <span class="ar-only">99.99 ر.س</span>
+                        <span class="en-only">$29.99</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">كل مميزات Premium</span>
+                            <span class="en-only">All Premium features</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">دفعة واحدة فقط</span>
+                            <span class="en-only">One-time payment</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span class="ar-only">تحديثات مجانية للأبد</span>
+                            <span class="en-only">Free updates forever</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="privacy.html">
+                <span class="ar-only">سياسة الخصوصية</span>
+                <span class="en-only">Privacy Policy</span>
+            </a>
+            <a href="terms-of-use.html">
+                <span class="ar-only">شروط الاستخدام</span>
+                <span class="en-only">Terms of Use</span>
+            </a>
+            <a href="contact-us.html">
+                <span class="ar-only">اتصل بنا</span>
+                <span class="en-only">Contact Us</span>
+            </a>
+        </div>
+        
+        <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="mailto:support@seerati.app" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+        
+        <p class="copyright">
+            <span class="ar-only">© 2025 سيرتي. جميع الحقوق محفوظة.</span>
+            <span class="en-only">© 2025 Seerati. All rights reserved.</span>
+        </p>
+    </footer>
+    
+    <script>
+        function setLanguage(lang) {
+            const body = document.body;
+            const buttons = document.querySelectorAll('.lang-btn');
+            
+            if (lang === 'en') {
+                body.classList.add('en');
+                body.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+                buttons[0].classList.remove('active');
+                buttons[1].classList.add('active');
+                
+                // Update featured badge
+                document.querySelector('.pricing-card.featured').setAttribute('data-badge', 'Most Popular');
+            } else {
+                body.classList.remove('en');
+                body.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+                buttons[0].classList.add('active');
+                buttons[1].classList.remove('active');
+                
+                // Update featured badge
+                document.querySelector('.pricing-card.featured').setAttribute('data-badge', 'الأكثر شعبية');
+            }
+            
+            // Save preference
+            localStorage.setItem('seerati-lang', lang);
+        }
+        
+        // Load saved language preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('seerati-lang');
+            if (savedLang) {
+                setLanguage(savedLang);
+            }
+        });
+    </script>
+</body>
+</html>
